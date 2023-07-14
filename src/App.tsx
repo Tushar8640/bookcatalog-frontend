@@ -1,11 +1,14 @@
+import { Toaster } from "./components/ui/Toaster";
+import MainLayout from "./layouts/MainLayout";
 import { useGetTodosQuery } from "./redux/features/todos/todoApi";
 
 function App() {
-  const {data,isError} = useGetTodosQuery(undefined)
+  const { data, isError } = useGetTodosQuery(undefined);
   console.log(data);
   return (
     <>
-      <h1>Hello world</h1>
+      <Toaster />
+      <MainLayout />
     </>
   );
 }
