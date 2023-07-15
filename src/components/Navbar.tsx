@@ -72,6 +72,9 @@ export default function Navbar() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </li>
+              <li className="ml-5">
+              <Link to={"/login"}> <Button >Login</Button></Link>
+              </li>
             </ul>
           </div>
         </div>
