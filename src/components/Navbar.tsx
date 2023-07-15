@@ -11,8 +11,11 @@ import {
 } from "./ui/dropdown-menu";
 import { HiOutlineSearch } from "react-icons/hi";
 import Cart from "./Cart";
+import { useAppDispatch } from "@/redux/hooks";
+import { logOut } from "@/redux/features/auth/authSlice";
 
 export default function Navbar() {
+  const dispatch = useAppDispatch();
   return (
     <nav className="w-full h-16 fixed top backdrop-blur-lg z-10">
       <div className="h-full w-full bg-white/60">
@@ -67,13 +70,22 @@ export default function Navbar() {
                       Team
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
-                      Subscription
+                      <Button
+                        onClick={() => dispatch(logOut())}
+                        variant={"outline"}
+                        size={"sm"}
+                      >
+                        Logout
+                      </Button>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </li>
               <li className="ml-5">
-              <Link to={"/login"}> <Button >Login</Button></Link>
+                <Link to={"/login"}>
+                  {" "}
+                  <Button>Login</Button>
+                </Link>
               </li>
             </ul>
           </div>

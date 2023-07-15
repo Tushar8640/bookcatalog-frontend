@@ -1,7 +1,7 @@
 import ProductReview from "@/components/ProductReview";
 import { Button } from "@/components/ui/button";
 import { useGetBookDetailsQuery } from "@/redux/features/books/bookApi";
-import { setToEdit } from "@/redux/features/books/boolSlice";
+import { setToEdit } from "@/redux/features/books/bookSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { IBook } from "@/types/globalTypes";
 

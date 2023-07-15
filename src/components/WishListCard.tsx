@@ -8,7 +8,7 @@ interface IProps {
   book: IBook;
 }
 
-export default function BookCard({ book }: IProps) {
+export default function WishListCard({ book }: IProps) {
   const [deleteBook] = useDeleteBookMutation();
   const handleDeleteBook = (book: IBook) => {
     console.log(book);
@@ -39,9 +39,7 @@ export default function BookCard({ book }: IProps) {
           >
             Add to WishList
           </Button>
-          <Button variant="outline" className="rounded-full"  onClick={() => handleDeleteBook(book)}>
-            <MdDelete />
-          </Button>
+        
         </div>
       </div>
     </div>

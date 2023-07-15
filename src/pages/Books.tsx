@@ -1,26 +1,24 @@
 import BookCard from "@/components/BookCard";
-import { Badge } from "@/components/ui/badge";
+
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandSeparator,
 } from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { Slider } from "@/components/ui/slider";
+
 import { cn } from "@/lib/utils";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
 import { IBook } from "@/types/globalTypes";
-import { CommandList } from "cmdk";
+
 import { ChevronsUpDown } from "lucide-react";
 import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -264,15 +262,17 @@ export default function Books() {
               </PopoverContent>
             </Popover>
           </div>
-          {/* <div>From 0$ To {priceRange}$</div> */}
+
+          <div className="my-10">
+            <Link to={"/addbook"}>
+              <Button size={"sm"} className="w-full">
+                Add Book
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
-      <div className="col-span-9">
-        <div className="my-10">
-          <Link to={"/addbook"}>
-            <Button size={"sm"}>Add Book</Button>
-          </Link>
-        </div>
+      <div className="col-span-9 my-5">
         <div className=" grid grid-cols-3 gap-10 pb-20">
           {data?.data?.map((book: IBook) => (
             <BookCard book={book} />
