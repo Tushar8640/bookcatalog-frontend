@@ -1,12 +1,13 @@
-import ProductCard from "@/components/ProductCard";
+import BookCard from "@/components/BookCard";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
-import { useGetTodosQuery } from "@/redux/features/todos/todoApi";
+import { Slider } from "@/components/ui/slider"
+import { useGetBooksQuery } from "@/redux/features/books/bookApi";
 import { Switch } from "@radix-ui/react-switch";
 
 
 export default function Books() {
-  const { data } = useGetTodosQuery(undefined);
+  const { data } = useGetBooksQuery(undefined);
+  console.log(data);
   return (
     <div className="grid grid-cols-12 max-w-7xl mx-auto relative ">
       <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
@@ -32,8 +33,8 @@ export default function Books() {
         </div>
       </div>
       <div className="col-span-9 grid grid-cols-3 gap-10 pb-20">
-        {data?.map((product: any) => (
-          <ProductCard product={product} />
+        {data?.data?.map((book: any) => (
+          <BookCard book={book} />
         ))}
       </div>
     </div>
