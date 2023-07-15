@@ -1,9 +1,11 @@
 import BookCard from "@/components/BookCard";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider"
+import { Slider } from "@/components/ui/slider";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
+import { IBook } from "@/types/globalTypes";
 import { Switch } from "@radix-ui/react-switch";
-
+import { Link } from "react-router-dom";
 
 export default function Books() {
   const { data } = useGetBooksQuery(undefined);
@@ -33,7 +35,12 @@ export default function Books() {
         </div>
       </div>
       <div className="col-span-9 grid grid-cols-3 gap-10 pb-20">
-        {data?.data?.map((book: any) => (
+        <div className="my-10">
+          <Link to={"/addbook"}>
+            <Button size={"sm"}>Add Book</Button>
+          </Link>
+        </div>
+        {data?.data?.map((book: IBook) => (
           <BookCard book={book} />
         ))}
       </div>

@@ -7,4 +7,5 @@ export interface IBook {
   reviews: number;
   createdAt: string;
   updatedAt: string;
+  description?: string;
 }

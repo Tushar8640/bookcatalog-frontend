@@ -3,11 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface IBookSlice {
-  editBook: object;
+  editBook: IBook;
 }
 
 const initialState: IBookSlice = {
-  editBook: {},
+  editBook: {
+    _id: 0,
+    title: "",
+    author: "",
+    genre: "",
+    publicationYear: "",
+    reviews: 0,
+    createdAt: "",
+    updatedAt: "",
+  },
 };
 
 const bookSlice = createSlice({

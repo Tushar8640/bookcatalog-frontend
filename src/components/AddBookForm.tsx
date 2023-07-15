@@ -3,54 +3,38 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "./ui/textarea";
-import { useAppSelector } from "@/redux/hooks";
 import { IBook } from "@/types/globalTypes";
-import {
-  useEditBookMutation,
-  useGetBookDetailsQuery,
-} from "@/redux/features/books/bookApi";
+import { useAddBookMutation } from "@/redux/features/books/bookApi";
 import React, { useEffect, useState } from "react";
 import { toast } from "./ui/use-toast";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
-export function EditBookForm({ id, className, ...props }: UserAuthFormProps) {
-  const { data: singleBookData } = useGetBookDetailsQuery(id);
-  const editBook = singleBookData?.data;
-  // const editBook: IBook = useAppSelector((state) => state.book.editBook);
-  const [editBookFunc, { data, isLoading, isError, error }] =
-    useEditBookMutation();
+export function AddBookForm({ id, className, ...props }: UserAuthFormProps) {
+  const [addBook, { data, isLoading, isError, error }] = useAddBookMutation();
 
   const [formData, setFormData] = useState<Partial<IBook>>({});
-  const [updatedData, setUpdatedData] = useState<Partial<IBook>>({});
-
-  useEffect(() => {
-    setFormData((prevFormData) => ({
-      ...editBook,
-    }));
-  }, [editBook]);
-  useEffect(() => {
-    if (data?.success) {
-      toast({
-        description: "Book Updated",
-      });
-    }
-  }, [data]);
 
   const handleInputChange = (e: {
     target: { name: string; value: number | string };
   }) => {
     const { name, value } = e.target;
-    setUpdatedData((prevData) => ({
-      ...prevData,
+    setFormData((prevformData) => ({
+      ...prevformData,
       [name]: value,
     }));
   };
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-
-    editBookFunc({ id: editBook._id, data: updatedData });
+    addBook(formData);
   }
+  useEffect(() => {
+    if (data?.success) {
+      toast({
+        description: "Book Added",
+      });
+    }
+  }, [data]);
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={onSubmit}>
@@ -127,7 +111,7 @@ export function EditBookForm({ id, className, ...props }: UserAuthFormProps) {
           </div>
           <Button disabled={isLoading}>
             {isLoading && <p>loading</p>}
-            Update
+            Add Book
           </Button>
         </div>
       </form>
