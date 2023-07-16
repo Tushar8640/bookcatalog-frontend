@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
+
+import { Button,  } from "@/components/ui/button";
 import { SignupForm } from "../components/SignUpForm";
 import { Link } from "react-router-dom";
 
