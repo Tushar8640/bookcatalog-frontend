@@ -14,7 +14,7 @@ export default function ReadList() {
         <div className=" grid grid-cols-3 gap-10 pb-20">
           {data?.data?.map(
             (d: { book: IBook; status: string; _id: string }) => (
-              <ReadListCard book={d?.book} status={d.status} id={d?._id} />
+              <ReadListCard book={d?.book} status={d?.status} id={d?._id} />
             )
           )}
         </div>

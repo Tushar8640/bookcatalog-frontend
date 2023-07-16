@@ -56,7 +56,7 @@ export default function ReadListCard({ book, status, id }: IProps) {
   return (
     <div>
       <div className="rounded-2xl h-[480px] flex flex-col items-start justify-between p-5 overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl hover:scale-[102%] transition-all gap-2">
-        <Link to={`/book-details/${book._id}`} className="w-full">
+        <Link to={`/book-details/${book?._id}`} className="w-full">
           <img
             src={
               "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Ym9va3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"

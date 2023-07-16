@@ -41,20 +41,7 @@ function debounce<T extends any[]>(
   };
 }
 
-export const labels = [
-  {
-    value: "bug",
-    label: "Bug",
-  },
-  {
-    value: "feature",
-    label: "Feature",
-  },
-  {
-    value: "documentation",
-    label: "Documentation",
-  },
-];
+
 
 export default function Books() {
   const queryParams: Array<string> = [];
@@ -109,6 +96,10 @@ export default function Books() {
     {
       value: "mystery",
       label: "Mystery",
+    },
+    {
+      value: "triller",
+      label: "Triller",
     },
     {
       value: "fantasy",

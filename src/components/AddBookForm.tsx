@@ -84,6 +84,7 @@ export function AddBookForm({ id, className, ...props }: UserAuthFormProps) {
               autoCorrect="off"
               disabled={isLoading}
               onChange={handleInputChange}
+              className="lowercase"
             />
             <Label className="mt-4  mb-1" htmlFor="year">
               Publication Year

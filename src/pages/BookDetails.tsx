@@ -14,7 +14,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 export default function BookDetails() {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const { data } = useGetBookDetailsQuery(id);
+  const { data ,refetch} = useGetBookDetailsQuery(id);
   const book = data?.data;
   const navigate = useNavigate();
   const [deleteBook] = useDeleteBookMutation();
@@ -93,7 +93,7 @@ export default function BookDetails() {
           </Button>
         </div>
       </div>
-      <BookReview reviews={book?.reviews} id={id!} />
+      <BookReview reviews={book?.reviews} id={id!} refetch={refetch}/>
     </>
   );
 }
