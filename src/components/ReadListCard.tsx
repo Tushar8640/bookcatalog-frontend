@@ -3,12 +3,24 @@ import { toast } from "./ui/use-toast";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { useDeleteBookMutation } from "@/redux/features/books/bookApi";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { useEffect, useState } from "react";
+import axios from "axios";
 interface IProps {
   book: IBook;
+  status: string;
+  id: string;
 }
 
-export default function ReadListCard({ book }: IProps) {
+export default function ReadListCard({ book, status, id }: IProps) {
   const [deleteBook] = useDeleteBookMutation();
   const handleDeleteBook = (book: IBook) => {
     console.log(book);
@@ -16,6 +28,30 @@ export default function ReadListCard({ book }: IProps) {
     toast({
       description: "Book Deleted",
     });
+  };
+  const [sstatus, setSStatus] = useState("");
+  useEffect(() => {
+    setSStatus(status);
+  }, [status]);
+  console.log(sstatus);
+  const statusArr = ["Reading", "Plan to Read", "Finished"];
+
+  const handleChangeStatus = async (status) => {
+    const resdata = await axios.patch(
+      `http://localhost:8000/api/v1/read-list/${id}`,
+      { status }
+    );
+    // addBookReview({
+    //   id,
+    //   review: comment,
+    // });
+    if (resdata?.data?.success) {
+      toast({
+        description: "Status Changed",
+
+      });
+    }
+    console.log(resdata, status);
   };
   return (
     <div>
@@ -29,18 +65,27 @@ export default function ReadListCard({ book }: IProps) {
           />
           <h1 className="text-xl font-semibold">{book?.title}</h1>
         </Link>
-        <Select>
+        <Select
+          onValueChange={(value) => {
+            setSStatus(value);
+            handleChangeStatus(value);
+          }}
+        >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a fruit" />
+            <SelectValue defaultValue={sstatus} placeholder={sstatus} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
+              <SelectLabel>Status</SelectLabel>
+              {statusArr?.map((status, i) => (
+                <SelectItem
+                  className={`${sstatus === status && "bg-green-500/30"}`}
+                  key={i}
+                  value={status}
+                >
+                  <span>{status}</span>
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
