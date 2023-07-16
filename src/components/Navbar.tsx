@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+
 import { Button } from "./ui/button";
-import { DropdownMenuSeparator } from "./ui/dropdown-menu";
-import { DropdownMenuLabel } from "./ui/dropdown-menu";
-import {
-  DropdownMenuItem,
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-} from "./ui/dropdown-menu";
-import { useAppDispatch } from "@/redux/hooks";
+
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logOut } from "@/redux/features/auth/authSlice";
+import { LogOutIcon } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 export default function Navbar() {
+  const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   return (
     <nav className="w-full h-16 fixed top backdrop-blur-lg z-10">
@@ -45,44 +46,32 @@ export default function Navbar() {
                 </Button>
               </li>
 
-              <li className="ml-5">
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="outline-none">
-                    <Avatar>
-                      <AvatarImage src="https://github.com/shadcn.png" />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer">
-                      Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
-                      Billing
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
-                      Team
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
-                      <Button
-                        onClick={() => dispatch(logOut())}
-                        variant={"outline"}
-                        size={"sm"}
-                      >
-                        Logout
-                      </Button>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </li>
-              <li className="ml-5">
-                <Link to={"/login"}>
-                  {" "}
-                  <Button>Login</Button>
-                </Link>
-              </li>
+              {user.email ? (
+                <li className="ml-5">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        {" "}
+                        <Button
+                          onClick={() => dispatch(logOut())}
+                          variant={"default"}
+                          size={"sm"}
+                        >
+                          <LogOutIcon />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Logout</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </li>
+              ) : (
+                <li className="ml-5">
+                  <Link to={"/login"}>
+                    {" "}
+                    <Button>Login</Button>
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>

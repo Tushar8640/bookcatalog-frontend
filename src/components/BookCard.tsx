@@ -7,18 +7,18 @@ import { useAppSelector } from "@/redux/hooks";
 import { useDeleteBookMutation } from "@/redux/features/books/bookApi";
 import { useAddToWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
 import { useAddToReadlistMutation } from "@/redux/features/readlist/readlistApi";
+import { Heart } from "lucide-react";
 interface IProps {
   book: IBook;
 }
 
 export default function BookCard({ book }: IProps) {
   const { user } = useAppSelector((state) => state.auth);
-  
+
   const [addWishlist] = useAddToWishlistMutation();
   const [addReadlist] = useAddToReadlistMutation();
 
   console.log("error");
-
 
   const addToWishList = (id: string) => {
     addWishlist({
@@ -40,7 +40,7 @@ export default function BookCard({ book }: IProps) {
   };
   return (
     <div>
-      <div className="rounded-2xl h-[480px] flex flex-col items-start justify-between p-5 overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl hover:scale-[102%] transition-all gap-2">
+      <div className="rounded-2xl h-[480px] flex flex-col items-start  p-5 overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl hover:scale-[102%] transition-all gap-2">
         <Link to={`/book-details/${book._id}`} className="w-full">
           <img
             src={
@@ -48,19 +48,19 @@ export default function BookCard({ book }: IProps) {
             }
             alt="product"
           />
-          <h1 className="text-xl font-semibold">{book?.title}</h1>
+          <h1 className="text-xl font-semibold mt-1">{book?.title}</h1>
         </Link>
-      
+        <p className="font-semibold text-primary">{book.genre}</p>
+        <p>{(book.description)?.slice(0,50)}...</p>
 
         {/* <p className="text-sm">Price: {book?.price}</p> */}
-        <div className="flex justify-around w-full">
-          <Button variant="default" onClick={() => addToWishList(book._id)}>
-            Add to WishList
+        <div className="flex justify-around w-full mt-auto">
+          <Button variant="outline" onClick={() => addToWishList(book._id)}>
+            <Heart />
           </Button>
           <Button variant="default" onClick={() => addToReadlist(book._id)}>
             Add to Readlist
           </Button>
-       
         </div>
       </div>
     </div>
