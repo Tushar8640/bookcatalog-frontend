@@ -2,9 +2,7 @@ import { IBook } from "@/types/globalTypes";
 import { toast } from "./ui/use-toast";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
-import { MdDelete } from "react-icons/md";
 import { useAppSelector } from "@/redux/hooks";
-import { useDeleteBookMutation } from "@/redux/features/books/bookApi";
 import { useAddToWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
 import { useAddToReadlistMutation } from "@/redux/features/readlist/readlistApi";
 import { Heart } from "lucide-react";
@@ -13,12 +11,11 @@ interface IProps {
 }
 
 export default function BookCard({ book }: IProps) {
-  const { user } = useAppSelector((state) => state.auth);
+  const user = useAppSelector((state) => state.auth.user);
 
   const [addWishlist] = useAddToWishlistMutation();
   const [addReadlist] = useAddToReadlistMutation();
 
-  console.log("error");
 
   const addToWishList = (id: string) => {
     addWishlist({
@@ -51,7 +48,7 @@ export default function BookCard({ book }: IProps) {
           <h1 className="text-xl font-semibold mt-1">{book?.title}</h1>
         </Link>
         <p className="font-semibold text-primary">{book.genre}</p>
-        <p>{(book.description)?.slice(0,50)}...</p>
+        <p>{book.description?.slice(0, 50)}...</p>
 
         {/* <p className="text-sm">Price: {book?.price}</p> */}
         <div className="flex justify-around w-full mt-auto">

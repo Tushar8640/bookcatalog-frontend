@@ -8,14 +8,15 @@ interface IBookSlice {
 
 const initialState: IBookSlice = {
   editBook: {
-    _id: 0,
+    _id: "",
     title: "",
     author: "",
     genre: "",
     publicationYear: "",
-    reviews: 0,
+    reviews:[],
     createdAt: "",
     updatedAt: "",
+    addedBy:""
   },
 };
 

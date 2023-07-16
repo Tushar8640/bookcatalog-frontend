@@ -23,7 +23,7 @@ const wishlistApi = api.injectEndpoints({
         body: review,
         method: "POST",
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+      async onQueryStarted(arg, { queryFulfilled }) {
         console.log(arg);
         try {
           const result = await queryFulfilled;
@@ -37,4 +37,8 @@ const wishlistApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetWishlistQuery, useAddToWishlistMutation ,useAddReviewMutation} = wishlistApi;
+export const {
+  useGetWishlistQuery,
+  useAddToWishlistMutation,
+  useAddReviewMutation,
+} = wishlistApi;

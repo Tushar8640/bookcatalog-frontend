@@ -12,6 +12,7 @@ const authApi = api.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
+          console.log(arg);
           console.log(result?.data?.data.accessToken);
           localStorage.setItem(
             "auth",

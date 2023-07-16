@@ -11,8 +11,8 @@ import { useAppSelector } from "@/redux/hooks";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
-export function AddBookForm({ id, className, ...props }: UserAuthFormProps) {
-  const [addBook, { data, isLoading, isError, error }] = useAddBookMutation();
+export function AddBookForm({ className, ...props }: UserAuthFormProps) {
+  const [addBook, { data, isLoading}] = useAddBookMutation();
   const { id: userId } = useAppSelector((state) => state.auth.user);
   const [formData, setFormData] = useState<Partial<IBook>>({});
 

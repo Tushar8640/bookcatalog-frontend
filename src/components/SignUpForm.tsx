@@ -15,7 +15,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [register, { isLoading, data, isError, error }] = useRegisterMutation();
+  const [register, { isLoading, data, isError }] = useRegisterMutation();
   useEffect(() => {
     if (data?.success) {
       navigate("/login");

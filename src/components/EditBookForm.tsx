@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "./ui/textarea";
-import { useAppSelector } from "@/redux/hooks";
 import { IBook } from "@/types/globalTypes";
 import {
   useEditBookMutation,
@@ -18,14 +17,14 @@ export function EditBookForm({ id, className, ...props }: UserAuthFormProps) {
   const { data: singleBookData } = useGetBookDetailsQuery(id);
   const editBook = singleBookData?.data;
   // const editBook: IBook = useAppSelector((state) => state.book.editBook);
-  const [editBookFunc, { data, isLoading, isError, error }] =
+  const [editBookFunc, { data, isLoading }] =
     useEditBookMutation();
 
   const [formData, setFormData] = useState<Partial<IBook>>({});
   const [updatedData, setUpdatedData] = useState<Partial<IBook>>({});
 
   useEffect(() => {
-    setFormData((prevFormData) => ({
+    setFormData(() => ({
       ...editBook,
     }));
   }, [editBook]);
