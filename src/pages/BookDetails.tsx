@@ -1,4 +1,4 @@
-import ProductReview from "@/components/ProductReview";
+import BookReview from "@/components/BookReview";
 import { Button } from "@/components/ui/button";
 import { useGetBookDetailsQuery } from "@/redux/features/books/bookApi";
 import { setToEdit } from "@/redux/features/books/bookSlice";
@@ -17,6 +17,7 @@ export default function BookDetails() {
   const handleAddToEdite = (book: IBook) => {
     dispatch(setToEdit(book));
   };
+  console.log(book);
   return (
     <>
       <div className="flex max-w-7xl mx-auto items-center border-b border-gray-300">
@@ -57,7 +58,7 @@ export default function BookDetails() {
           <Button size={"sm"}>Delete</Button>
         </div>
       </div>
-      <ProductReview />
+      <BookReview reviews={book?.reviews} id={id!} />
     </>
   );
 }

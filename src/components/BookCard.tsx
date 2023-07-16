@@ -17,6 +17,7 @@ export default function BookCard({ book }: IProps) {
   const [addWishlist] = useAddToWishlistMutation();
   const [addReadlist] = useAddToReadlistMutation();
 
+  console.log("error");
   const handleDeleteBook = (book: IBook) => {
     console.log(book);
     deleteBook(book?._id);
@@ -55,7 +56,7 @@ export default function BookCard({ book }: IProps) {
           />
           <h1 className="text-xl font-semibold">{book?.title}</h1>
         </Link>
-        <p>Rating: {book?.reviews}</p>
+      
 
         {/* <p className="text-sm">Price: {book?.price}</p> */}
         <div className="flex justify-around w-full">
