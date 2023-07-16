@@ -12,8 +12,8 @@ export default function WishList() {
       <div className="col-span-12 my-5 mx-auto">
         <h1 className="text-2xl my-3"> Your Wishlist</h1>
         <div className=" grid grid-cols-3 gap-10 pb-20">
-          {data?.data?.map((book: IBook) => (
-            <WishListCard book={book} />
+          {data?.data?.map((d: { book: IBook; }) => (
+            <WishListCard book={d?.book} />
           ))}
         </div>
       </div>

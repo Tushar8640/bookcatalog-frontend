@@ -30,36 +30,15 @@ const authApi = api.injectEndpoints({
         }
       },
     }),
-    // getBookDetails: builder.query({
-    //   query: (id) => ({
-    //     url: `/books/${id}`,
-    //   }),
-    //   providesTags: ["Books"],
-    // }),
-    // addBook: builder.mutation({
-    //   query: (data) => ({
-    //     url: `/books`,
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["Books"],
-    // }),
-    // deleteBook: builder.mutation({
-    //   query: (id) => ({
-    //     url: `/books/${id}`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ["Books"],
-    // }),
-    // editBook: builder.mutation({
-    //   query: ({ id, data }) => ({
-    //     url: `/books/${id}`,
-    //     method: "PATCH",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["Books"],
-    // }),
+
+    register: builder.mutation({
+      query: (data) => ({
+        url: `/auth/signup`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation } = authApi;

@@ -9,8 +9,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
 } from "./ui/dropdown-menu";
-import { HiOutlineSearch } from "react-icons/hi";
-import Cart from "./Cart";
 import { useAppDispatch } from "@/redux/hooks";
 import { logOut } from "@/redux/features/auth/authSlice";
 

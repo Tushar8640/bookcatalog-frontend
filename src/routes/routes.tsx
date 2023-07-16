@@ -11,6 +11,7 @@ import AddBook from "@/pages/AddBook";
 import WishList from "@/pages/WishList";
 import PrivateRoute from "./PrivateRoute";
 import ReadList from "@/pages/ReadList";
+import PublicRoute from "./PublicRote";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -52,11 +53,19 @@ const routes = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: (
+      <PublicRoute>
+        <Signup />
+      </PublicRoute>
+    ),
   },
 
   {
