@@ -6,7 +6,7 @@ import {
   useGetBookDetailsQuery,
 } from "@/redux/features/books/bookApi";
 import { setToEdit } from "@/redux/features/books/bookSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IBook } from "@/types/globalTypes";
 import Swal from "sweetalert2";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -18,6 +18,7 @@ export default function BookDetails() {
   const book = data?.data;
   const navigate = useNavigate();
   const [deleteBook] = useDeleteBookMutation();
+  const { id: userId } = useAppSelector((state) => state.auth.user);
   const handleDeleteBook = (book: IBook) => {
     Swal.fire({
       title: "Are you sure?",
@@ -41,7 +42,7 @@ export default function BookDetails() {
   const handleAddToEdite = (book: IBook) => {
     dispatch(setToEdit(book));
   };
-  console.log(book);
+  console.log(book?.addedBy === userId);
   return (
     <>
       <div className="flex max-w-7xl mx-auto items-center border-b border-gray-300">
@@ -70,19 +71,23 @@ export default function BookDetails() {
           </p>
           {/* <p className="text-xl">Rating: {product?.rating}</p> */}
 
-          <Link to={`/editbook/${id}`} state={{ data: book }}>
-            <Button
-              onClick={() => handleAddToEdite(book)}
-              size={"sm"}
-              className="mr-5"
-            >
-              Edit
-            </Button>
-          </Link>
+          {(userId === book?.addedBy) && (
+            <Link to={`/editbook/${id}`} state={{ data: book }}>
+              <Button
+                onClick={() => handleAddToEdite(book)}
+                size={"sm"}
+                className="mr-5"
+                disabled={!(userId === book?.addedBy)}
+              >
+                Edit
+              </Button>
+            </Link>
+          )}
           <Button
             variant="destructive"
             size={"sm"}
             onClick={() => handleDeleteBook(book)}
+            disabled={!(userId === book?.addedBy)}
           >
             Delete
           </Button>

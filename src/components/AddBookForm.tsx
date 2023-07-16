@@ -13,7 +13,7 @@ type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function AddBookForm({ id, className, ...props }: UserAuthFormProps) {
   const [addBook, { data, isLoading, isError, error }] = useAddBookMutation();
-const {id} = useAppSelector(state=>state.auth.user)
+  const { id: userId } = useAppSelector((state) => state.auth.user);
   const [formData, setFormData] = useState<Partial<IBook>>({});
 
   const handleInputChange = (e: {
@@ -27,7 +27,7 @@ const {id} = useAppSelector(state=>state.auth.user)
   };
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    formData.addedBy=id
+    formData.addedBy = userId!;
     addBook(formData);
   }
   useEffect(() => {
