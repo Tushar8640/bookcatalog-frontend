@@ -5,13 +5,13 @@ import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
 import Books from "@/pages/Books";
 import BookDetails from "@/pages/BookDetails";
-import Signup from "@/pages/Signup";
 import EditBook from "@/pages/EditBook";
 import AddBook from "@/pages/AddBook";
 import WishList from "@/pages/WishList";
 import PrivateRoute from "./PrivateRoute";
 import ReadList from "@/pages/ReadList";
 import PublicRoute from "./PublicRote";
+import Signup from "@/pages/Signup";
 const routes = createBrowserRouter([
   {
     path: "/",
