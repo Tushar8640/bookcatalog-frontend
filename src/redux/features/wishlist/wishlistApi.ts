@@ -17,7 +17,24 @@ const wishlistApi = api.injectEndpoints({
       }),
       invalidatesTags: ["wishlist"],
     }),
+    addReview: builder.mutation({
+      query: ({ id, review }) => ({
+        url: `/books/addReview/${id}`,
+        body: review,
+        method: "POST",
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        console.log(arg);
+        try {
+          const result = await queryFulfilled;
+          console.log(result?.data);
+        } catch (err) {
+          //nothing to do
+          console.log(err);
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetWishlistQuery, useAddToWishlistMutation } = wishlistApi;
+export const { useGetWishlistQuery, useAddToWishlistMutation ,useAddReviewMutation} = wishlistApi;

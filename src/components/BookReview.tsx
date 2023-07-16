@@ -1,13 +1,11 @@
-import {
-  useAddBookMutation,
-  useAddReviewMutation,
-} from "@/redux/features/books/bookApi";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { FiSend } from "react-icons/fi";
 import { useState } from "react";
 import { IReview } from "@/types/globalTypes";
+import { useAddReviewMutation } from "@/redux/features/wishlist/wishlistApi";
+import axios from "axios";
 
 interface IProps {
   reviews: IReview[];
@@ -15,18 +13,25 @@ interface IProps {
 }
 
 export default function BookReview({ reviews, id }: IProps) {
-  const [addReview, { data }] = useAddReviewMutation();
+  const [addBookReview, { data }] = useAddReviewMutation();
   const [comment, setComment] = useState("");
-  console.log(reviews);
-  const handleAddReview = () => {
+
+  const handleAddReview = async () => {
     const data = {
-      id,
       review: comment,
     };
-    addReview(data);
+
+    const resdata = axios.post(
+      `http://localhost:8000/api/v1/books/addReview/${id}`,
+      data
+    );
+    // addBookReview({
+    //   id,
+    //   review: comment,
+    // });
     console.log(data);
   };
-  console.log(data, comment);
+
   return (
     <div className="max-w-7xl mx-auto mt-5">
       <div className="flex gap-5 items-center">

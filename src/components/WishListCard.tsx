@@ -29,7 +29,6 @@ export default function WishListCard({ book }: IProps) {
           />
           <h1 className="text-xl font-semibold">{book?.title}</h1>
         </Link>
-        <p>Rating: {book?.reviews}</p>
 
         {/* <p className="text-sm">Price: {book?.price}</p> */}
         <div className="flex justify-around w-full">

@@ -3,6 +3,7 @@ import { toast } from "./ui/use-toast";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { useDeleteBookMutation } from "@/redux/features/books/bookApi";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select";
 interface IProps {
   book: IBook;
 }
@@ -28,8 +29,21 @@ export default function ReadListCard({ book }: IProps) {
           />
           <h1 className="text-xl font-semibold">{book?.title}</h1>
         </Link>
-        <p>Rating: {book?.reviews}</p>
-
+        <Select>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select a fruit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              <SelectItem value="apple">Apple</SelectItem>
+              <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="blueberry">Blueberry</SelectItem>
+              <SelectItem value="grapes">Grapes</SelectItem>
+              <SelectItem value="pineapple">Pineapple</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
         {/* <p className="text-sm">Price: {book?.price}</p> */}
         <div className="flex justify-around w-full">
           <Button
@@ -38,7 +52,6 @@ export default function ReadListCard({ book }: IProps) {
           >
             Add to WishList
           </Button>
-        
         </div>
       </div>
     </div>
