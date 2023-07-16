@@ -6,6 +6,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { useAddToWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
 import { useAddToReadlistMutation } from "@/redux/features/readlist/readlistApi";
 import { Heart } from "lucide-react";
+import Swal from "sweetalert2";
 interface IProps {
   book: IBook;
 }
@@ -16,8 +17,15 @@ export default function BookCard({ book }: IProps) {
   const [addWishlist] = useAddToWishlistMutation();
   const [addReadlist] = useAddToReadlistMutation();
 
-
   const addToWishList = (id: string) => {
+    if (!user.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please Login First!",
+      });
+      return;
+    }
     addWishlist({
       user: user?.id,
       book: id,
@@ -27,6 +35,14 @@ export default function BookCard({ book }: IProps) {
     });
   };
   const addToReadlist = (id: string) => {
+    if (!user.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please Login First!",
+      });
+      return;
+    }
     addReadlist({
       user: user?.id,
       book: id,

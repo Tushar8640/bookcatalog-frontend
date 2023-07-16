@@ -14,6 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { cn } from "@/lib/utils";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
@@ -40,8 +41,6 @@ function debounce<T extends any[]>(
     }, delay);
   };
 }
-
-
 
 export default function Books() {
   const queryParams: Array<string> = [];
@@ -84,6 +83,7 @@ export default function Books() {
       setUrl("");
     }
   }, [filterGenre, filterYear, queryParams, searchText, url]);
+
   const genres = [
     {
       value: "wow",
@@ -114,16 +114,17 @@ export default function Books() {
       label: "Sci-Fi",
     },
   ];
-  const years = [
-    {
-      value: "2022",
-      label: "2022",
-    },
-    {
-      value: "2023",
-      label: "2023",
-    },
-  ];
+  const years = [];
+
+  for (let i = 1923; i <= 2023; i++) {
+    const year = {
+      value: String(i),
+      label: String(i),
+    };
+
+    years.push(year);
+  }
+
   const [open, setOpen] = useState(false);
   const [openYear, setOpenYear] = useState(false);
 
@@ -227,27 +228,29 @@ export default function Books() {
                   <CommandInput placeholder="Search Year..." />
                   <CommandEmpty>No genre found.</CommandEmpty>
                   <CommandGroup>
-                    {years.map((year) => (
-                      <CommandItem
-                        key={year.value}
-                        onSelect={(currentValue) => {
-                          setFilterYear(
-                            currentValue === filterYear ? "" : currentValue
-                          );
-                          setOpen(false);
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            filterYear === year.value
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                        {year.label}
-                      </CommandItem>
-                    ))}
+                    <ScrollArea className="h-72 w-48 rounded-md border">
+                      {years.map((year) => (
+                        <CommandItem
+                          key={year.value}
+                          onSelect={(currentValue) => {
+                            setFilterYear(
+                              currentValue === filterYear ? "" : currentValue
+                            );
+                            setOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              filterYear === year.value
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                          {year.label}
+                        </CommandItem>
+                      ))}
+                    </ScrollArea>
                   </CommandGroup>
                 </Command>
               </PopoverContent>

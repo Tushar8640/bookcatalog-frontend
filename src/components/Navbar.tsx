@@ -57,7 +57,7 @@ export default function Navbar() {
                           variant={"default"}
                           size={"sm"}
                         >
-                          <LogOutIcon />
+                          <LogOutIcon width={"20"} className="" />
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>Logout</TooltipContent>

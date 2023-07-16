@@ -23,11 +23,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "/books",
-        element: (
-          <PrivateRoute>
-            <Books />
-          </PrivateRoute>
-        ),
+        element: <Books />,
       },
       {
         path: "/wishlist",
