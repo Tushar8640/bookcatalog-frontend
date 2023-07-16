@@ -1,10 +1,7 @@
-
-
 export interface IReview {
   review: string;
   _id: string;
 }
-
 
 export interface IBook {
   _id: string;
@@ -16,4 +13,5 @@ export interface IBook {
   createdAt: string;
   updatedAt: string;
   description?: string;
+  addedBy: string;
 }

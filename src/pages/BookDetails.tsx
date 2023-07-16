@@ -1,19 +1,43 @@
 import BookReview from "@/components/BookReview";
 import { Button } from "@/components/ui/button";
-import { useGetBookDetailsQuery } from "@/redux/features/books/bookApi";
+import { toast } from "@/components/ui/use-toast";
+import {
+  useDeleteBookMutation,
+  useGetBookDetailsQuery,
+} from "@/redux/features/books/bookApi";
 import { setToEdit } from "@/redux/features/books/bookSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { IBook } from "@/types/globalTypes";
-
-import { Link, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function BookDetails() {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const { data } = useGetBookDetailsQuery(id);
   const book = data?.data;
-  //! Temporary code, should be replaced with redux
-
+  const navigate = useNavigate();
+  const [deleteBook] = useDeleteBookMutation();
+  const handleDeleteBook = (book: IBook) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteBook(book?._id);
+        toast({
+          description: "Book Deleted",
+        });
+        navigate("/books");
+      }
+    });
+    console.log(book);
+  };
   const handleAddToEdite = (book: IBook) => {
     dispatch(setToEdit(book));
   };
@@ -55,7 +79,13 @@ export default function BookDetails() {
               Edit
             </Button>
           </Link>
-          <Button size={"sm"}>Delete</Button>
+          <Button
+            variant="destructive"
+            size={"sm"}
+            onClick={() => handleDeleteBook(book)}
+          >
+            Delete
+          </Button>
         </div>
       </div>
       <BookReview reviews={book?.reviews} id={id!} />

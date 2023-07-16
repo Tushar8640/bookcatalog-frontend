@@ -7,12 +7,13 @@ import { IBook } from "@/types/globalTypes";
 import { useAddBookMutation } from "@/redux/features/books/bookApi";
 import React, { useEffect, useState } from "react";
 import { toast } from "./ui/use-toast";
+import { useAppSelector } from "@/redux/hooks";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function AddBookForm({ id, className, ...props }: UserAuthFormProps) {
   const [addBook, { data, isLoading, isError, error }] = useAddBookMutation();
-
+const {id} = useAppSelector(state=>state.auth.user)
   const [formData, setFormData] = useState<Partial<IBook>>({});
 
   const handleInputChange = (e: {
@@ -26,6 +27,7 @@ export function AddBookForm({ id, className, ...props }: UserAuthFormProps) {
   };
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
+    formData.addedBy=id
     addBook(formData);
   }
   useEffect(() => {

@@ -13,18 +13,12 @@ interface IProps {
 
 export default function BookCard({ book }: IProps) {
   const { user } = useAppSelector((state) => state.auth);
-  const [deleteBook] = useDeleteBookMutation();
+  
   const [addWishlist] = useAddToWishlistMutation();
   const [addReadlist] = useAddToReadlistMutation();
 
   console.log("error");
-  const handleDeleteBook = (book: IBook) => {
-    console.log(book);
-    deleteBook(book?._id);
-    toast({
-      description: "Book Deleted",
-    });
-  };
+
 
   const addToWishList = (id: string) => {
     addWishlist({
@@ -66,13 +60,7 @@ export default function BookCard({ book }: IProps) {
           <Button variant="default" onClick={() => addToReadlist(book._id)}>
             Add to Readlist
           </Button>
-          <Button
-            variant="outline"
-            className="rounded-full"
-            onClick={() => handleDeleteBook(book)}
-          >
-            <MdDelete />
-          </Button>
+       
         </div>
       </div>
     </div>
