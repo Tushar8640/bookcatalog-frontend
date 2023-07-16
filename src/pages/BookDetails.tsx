@@ -57,6 +57,12 @@ export default function BookDetails() {
         </div>
         <div className="w-[50%] space-y-3">
           <h1 className="text-3xl font-semibold">{book?.title}</h1>
+         <div className="flex space-x-2">
+         <p className="text-xl font-semibold">{book?.author}</p>
+         
+          <p className="text-xl">{book?.publicationYear}</p>
+         </div>
+         <p className="text-xl capitalize">Genre: {book?.genre}</p>
           <p className="text-xl">{book?.description}</p>
           {/* <p className="text-xl">Rating: {product?.rating}</p> */}
 
