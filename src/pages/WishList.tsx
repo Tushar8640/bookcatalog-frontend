@@ -1,9 +1,10 @@
 import WishListCard from "@/components/WishListCard";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
+import { useGetWishlistQuery } from "@/redux/features/wishlist/wishlistApi";
 import { IBook } from "@/types/globalTypes";
 
 export default function WishList() {
-  const { data } = useGetBooksQuery("", {
+  const { data } = useGetWishlistQuery("", {
     refetchOnMountOrArgChange: true,
   });
 

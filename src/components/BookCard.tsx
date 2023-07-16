@@ -4,17 +4,32 @@ import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { useDeleteBookMutation } from "@/redux/features/books/bookApi";
+import { useAddToWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
+import { useAppSelector } from "@/redux/hooks";
 interface IProps {
   book: IBook;
 }
 
 export default function BookCard({ book }: IProps) {
+  const { user } = useAppSelector((state) => state.auth);
   const [deleteBook] = useDeleteBookMutation();
+  const [addWishlist, { isSuccess }] = useAddToWishlistMutation();
+
   const handleDeleteBook = (book: IBook) => {
     console.log(book);
     deleteBook(book?._id);
     toast({
       description: "Book Deleted",
+    });
+  };
+
+  const addToWishList = (id: string) => {
+    addWishlist({
+      user: user?.id,
+      book: id,
+    });
+    toast({
+      description: "Book Added to wishlist",
     });
   };
   return (
@@ -33,13 +48,14 @@ export default function BookCard({ book }: IProps) {
 
         {/* <p className="text-sm">Price: {book?.price}</p> */}
         <div className="flex justify-around w-full">
-          <Button
-            variant="default"
-            // onClick={() => addToWishList(book)}
-          >
+          <Button variant="default" onClick={() => addToWishList(book._id)}>
             Add to WishList
           </Button>
-          <Button variant="outline" className="rounded-full"  onClick={() => handleDeleteBook(book)}>
+          <Button
+            variant="outline"
+            className="rounded-full"
+            onClick={() => handleDeleteBook(book)}
+          >
             <MdDelete />
           </Button>
         </div>
