@@ -42,13 +42,11 @@ export default function Navbar() {
                 </Button>
               </li>
               <li>
-                <Button variant="ghost">
-                  <HiOutlineSearch size="25" />
+                <Button variant="link" asChild>
+                  <Link to="/readlist">Read List</Link>
                 </Button>
               </li>
-              <li>
-                <Cart />
-              </li>
+
               <li className="ml-5">
                 <DropdownMenu>
                   <DropdownMenuTrigger className="outline-none">

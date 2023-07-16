@@ -3,9 +3,10 @@ import { toast } from "./ui/use-toast";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
+import { useAppSelector } from "@/redux/hooks";
 import { useDeleteBookMutation } from "@/redux/features/books/bookApi";
 import { useAddToWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
-import { useAppSelector } from "@/redux/hooks";
+import { useAddToReadlistMutation } from "@/redux/features/readlist/readlistApi";
 interface IProps {
   book: IBook;
 }
@@ -13,7 +14,8 @@ interface IProps {
 export default function BookCard({ book }: IProps) {
   const { user } = useAppSelector((state) => state.auth);
   const [deleteBook] = useDeleteBookMutation();
-  const [addWishlist, { isSuccess }] = useAddToWishlistMutation();
+  const [addWishlist] = useAddToWishlistMutation();
+  const [addReadlist] = useAddToReadlistMutation();
 
   const handleDeleteBook = (book: IBook) => {
     console.log(book);
@@ -30,6 +32,15 @@ export default function BookCard({ book }: IProps) {
     });
     toast({
       description: "Book Added to wishlist",
+    });
+  };
+  const addToReadlist = (id: string) => {
+    addReadlist({
+      user: user?.id,
+      book: id,
+    });
+    toast({
+      description: "Book Added to readlist",
     });
   };
   return (
@@ -50,6 +61,9 @@ export default function BookCard({ book }: IProps) {
         <div className="flex justify-around w-full">
           <Button variant="default" onClick={() => addToWishList(book._id)}>
             Add to WishList
+          </Button>
+          <Button variant="default" onClick={() => addToReadlist(book._id)}>
+            Add to Readlist
           </Button>
           <Button
             variant="outline"
