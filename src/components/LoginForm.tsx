@@ -4,13 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { AlertCircle } from "lucide-react";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function LoginForm({ className, ...props }: UserAuthFormProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [login, { isLoading, data }] = useLoginMutation();
+  const [login, { isLoading, data, isError }] = useLoginMutation();
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     login({
@@ -50,8 +52,15 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           </div>
           <Button disabled={isLoading}>
             {isLoading && <p>loading</p>}
-            Login with Email
+            Login
           </Button>
+          {isError && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>Something went wrong ! </AlertDescription>
+            </Alert>
+          )}
         </div>
       </form>
     </div>

@@ -1,6 +1,9 @@
 export interface IReview {
   review: string;
   _id: string;
+  id: {
+    name: string;
+  };
 }
 
 export interface IBook {

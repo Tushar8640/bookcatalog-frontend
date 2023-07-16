@@ -37,12 +37,13 @@ export default function BookDetails() {
         navigate("/books");
       }
     });
-    console.log(book);
+   
   };
   const handleAddToEdite = (book: IBook) => {
     dispatch(setToEdit(book));
   };
   console.log(book?.addedBy === userId);
+  console.log(book);
   return (
     <>
       <div className="flex max-w-7xl mx-auto items-center mt-5">
@@ -81,7 +82,7 @@ export default function BookDetails() {
           </Button>
         </div>
       </div>
-      <BookReview reviews={book?.reviews} id={id!} refetch={refetch} />
+      <BookReview reviews={book?.reviews} id={id!} refetch={refetch} user={book?.id}/>
     </>
   );
 }

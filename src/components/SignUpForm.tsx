@@ -2,16 +2,25 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import { useNavigate } from "react-router-dom";
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function SignupForm({ className, ...props }: UserAuthFormProps) {
+  const navigate = useNavigate();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [register, { isLoading, data }] = useRegisterMutation();
+  const [register, { isLoading, data, isError, error }] = useRegisterMutation();
+  useEffect(() => {
+    if (data?.success) {
+      navigate("/login");
+    }
+  }, [data, navigate]);
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     register({
@@ -20,7 +29,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
       password,
     });
   }
-console.log(data);
+  console.log(data);
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={onSubmit}>
@@ -81,19 +90,14 @@ console.log(data);
           </Button>
         </div>
       </form>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <Button variant="outline" type="button" disabled={isLoading}>
-        {isLoading ? <p>loading</p> : <p>GitHub</p>}
-      </Button>
+
+      {isError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>Something went wrong ! </AlertDescription>
+        </Alert>
+      )}
     </div>
   );
 }
