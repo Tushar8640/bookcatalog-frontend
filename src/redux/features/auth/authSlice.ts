@@ -3,6 +3,8 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 interface IUserState {
   user: {
     token: string | null;
+    email: string | null;
+    id: string | null;
   };
   isLoading: boolean;
 }
@@ -10,6 +12,8 @@ interface IUserState {
 const initialState: IUserState = {
   user: {
     token: null,
+    email: null,
+    id: null,
   },
   isLoading: false,
 };
@@ -19,19 +23,37 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.user.token = action?.payload?.token;
+      const token = action?.payload?.token;
+      state.user.token = token;
+
+      // decode the logged in user
+      function parseJwt(token: string) {
+        if (!token) {
+          return;
+        }
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace("-", "+").replace("_", "/");
+        return JSON.parse(window.atob(base64));
+      }
+
+      // loggedin user
+      const user = parseJwt(token);
+      console.log(user);
+      state.user.email = user?.userEmail;
+      state.user.id = user?.userId;
     },
     logOut: (state) => {
       state.user.token = null;
+      state.user.email = null;
+      state.user.id = null;
       localStorage.removeItem("auth");
     },
-    setIsLoading: (state,action) => {
+    setIsLoading: (state, action) => {
       state.isLoading = action.payload;
-     
     },
   },
 });
 
-export const { setUser, logOut,setIsLoading } = authSlice.actions;
+export const { setUser, logOut, setIsLoading } = authSlice.actions;
 
 export default authSlice.reducer;
