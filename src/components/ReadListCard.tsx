@@ -14,6 +14,7 @@ import {
 } from "./ui/select";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Label } from "./ui/label";
 interface IProps {
   book: IBook;
   status: string;
@@ -21,41 +22,29 @@ interface IProps {
 }
 
 export default function ReadListCard({ book, status, id }: IProps) {
-  const [deleteBook] = useDeleteBookMutation();
-  const handleDeleteBook = (book: IBook) => {
-    console.log(book);
-    deleteBook(book?._id);
-    toast({
-      description: "Book Deleted",
-    });
-  };
+
   const [sstatus, setSStatus] = useState("");
   useEffect(() => {
     setSStatus(status);
   }, [status]);
-  console.log(sstatus);
+
   const statusArr = ["Reading", "Plan to Read", "Finished"];
 
-  const handleChangeStatus = async (status) => {
+  const handleChangeStatus = async (status: string) => {
     const resdata = await axios.patch(
       `http://localhost:8000/api/v1/read-list/${id}`,
       { status }
     );
-    // addBookReview({
-    //   id,
-    //   review: comment,
-    // });
+  
     if (resdata?.data?.success) {
       toast({
         description: "Status Changed",
-
       });
     }
-    console.log(resdata, status);
   };
   return (
     <div>
-      <div className="rounded-2xl h-[480px] flex flex-col items-start justify-between p-5 overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl hover:scale-[102%] transition-all gap-2">
+      <div className="rounded-2xl h-auto flex flex-col items-start  p-5 overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl hover:scale-[102%] transition-all gap-2">
         <Link to={`/book-details/${book?._id}`} className="w-full">
           <img
             src={
@@ -63,8 +52,11 @@ export default function ReadListCard({ book, status, id }: IProps) {
             }
             alt="product"
           />
-          <h1 className="text-xl font-semibold">{book?.title}</h1>
+          <h1 className="text-xl font-semibold mt-1">{book?.title}</h1>
         </Link>
+        <p className="font-semibold text-primary">{book?.genre}</p>
+        <p>{book?.description?.slice(0, 50)}...</p>
+        <Label className="mt-2">Status:</Label>
         <Select
           onValueChange={(value) => {
             setSStatus(value);
@@ -91,12 +83,7 @@ export default function ReadListCard({ book, status, id }: IProps) {
         </Select>
         {/* <p className="text-sm">Price: {book?.price}</p> */}
         <div className="flex justify-around w-full">
-          <Button
-            variant="default"
-            // onClick={() => addToWishList(book)}
-          >
-            Add to WishList
-          </Button>
+      
         </div>
       </div>
     </div>

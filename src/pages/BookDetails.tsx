@@ -14,7 +14,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 export default function BookDetails() {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const { data ,refetch} = useGetBookDetailsQuery(id);
+  const { data, refetch } = useGetBookDetailsQuery(id);
   const book = data?.data;
   const navigate = useNavigate();
   const [deleteBook] = useDeleteBookMutation();
@@ -45,7 +45,7 @@ export default function BookDetails() {
   console.log(book?.addedBy === userId);
   return (
     <>
-      <div className="flex max-w-7xl mx-auto items-center border-b border-gray-300">
+      <div className="flex max-w-7xl mx-auto items-center mt-5">
         <div className="w-[50%]">
           <img
             src={
@@ -56,22 +56,10 @@ export default function BookDetails() {
         </div>
         <div className="w-[50%] space-y-3">
           <h1 className="text-3xl font-semibold">{book?.title}</h1>
-          <p className="text-xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit eos
-            obcaecati debitis velit nobis, fuga dicta. Culpa, atque quae
-            similique autem ducimus eligendi aliquid, omnis nihil maxime ad
-            consequatur eaque, alias itaque cum quos nobis reiciendis voluptas
-            deleniti illo libero officiis magni iste. Rerum maxime earum
-            inventore recusandae officiis placeat eum. Minus voluptatem, debitis
-            omnis, tempore optio velit corrupti officiis amet rerum quibusdam
-            aliquam ad eaque neque, cumque atque nulla ipsam labore
-            reprehenderit nihil eligendi a officia accusantium quas non. Enim
-            harum dolor quasi dolorum modi sed et pariatur deserunt amet. Ipsam
-            fugiat totam, ipsum minus voluptas accusantium dicta accusamus.
-          </p>
+          <p className="text-xl">{book?.description}</p>
           {/* <p className="text-xl">Rating: {product?.rating}</p> */}
 
-          {(userId === book?.addedBy) && (
+          {userId === book?.addedBy && (
             <Link to={`/editbook/${id}`} state={{ data: book }}>
               <Button
                 onClick={() => handleAddToEdite(book)}
@@ -93,7 +81,7 @@ export default function BookDetails() {
           </Button>
         </div>
       </div>
-      <BookReview reviews={book?.reviews} id={id!} refetch={refetch}/>
+      <BookReview reviews={book?.reviews} id={id!} refetch={refetch} />
     </>
   );
 }

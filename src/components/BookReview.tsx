@@ -41,18 +41,20 @@ export default function BookReview({ reviews, id, refetch }: IProps) {
 
   return (
     <div className="max-w-7xl mx-auto mt-5">
-      <div className="flex gap-5 items-center">
+      <div className="flex flex-col gap-5 mt-3">
         <Textarea
           onChange={(e) => setComment(e.target.value)}
           className="min-h-[30px]"
           value={comment}
+          
         />
         <Button
           onClick={handleAddReview}
-          className="rounded-full h-10 w-10 p-2 text-[25px]"
+         size={"sm"}
           disabled={isLoading}
+          className="w-[100px]"
         >
-          <FiSend />
+          Comment
         </Button>
       </div>
       <div className="mt-10">
